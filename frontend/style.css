@@ -1,0 +1,365 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(145deg, #eef5ff 0%, #e0eaff 100%);
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 1.8rem;
+  color: #0a2540;
+}
+
+.dashboard {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* header + blue theme */
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0b3b5f, #1b6b8f, #2c9baf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subhead {
+  color: #2c5a7a;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  border-left: 4px solid #2c9baf;
+  padding-left: 1.2rem;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(2px);
+  border-radius: 0 20px 20px 0;
+  width: fit-content;
+  padding: 0.6rem 1.2rem;
+}
+
+/* modern grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.8rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(2px);
+  border-radius: 32px;
+  box-shadow: 0 20px 35px -12px rgba(0, 20, 50, 0.15), 0 0 0 1px rgba(44, 155, 175, 0.15);
+  padding: 1.6rem 1.8rem;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(44, 155, 175, 0.25);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 40px -16px rgba(0, 60, 80, 0.2);
+  border-color: #2c9baf60;
+}
+
+.card-full {
+  grid-column: 1 / -1;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #0f4c6b;
+  border-left: 5px solid #2c9baf;
+  padding-left: 1rem;
+}
+
+/* risk meter with digital gauge */
+.risk-meter {
+  background: linear-gradient(120deg, #f0f9ff, #ffffff);
+  border-radius: 28px;
+  padding: 1.2rem;
+  margin: 0.5rem 0 1rem;
+  box-shadow: inset 0 1px 3px #0001, 0 6px 12px -8px #0a254015;
+}
+
+.risk-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #4a7c9c;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+/* Digital Circular Gauge */
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0 1rem;
+}
+
+.circular-gauge {
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));
+}
+
+.gauge-bg {
+  stroke: #e2ecf3;
+}
+
+.gauge-progress {
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gauge-percent {
+  font-size: 32px;
+  font-weight: 800;
+  fill: #1a4c6e;
+  dominant-baseline: middle;
+}
+
+.gauge-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: #6b8eaa;
+  letter-spacing: 1px;
+  dominant-baseline: middle;
+}
+
+.confidence-badge {
+  background: #d9eff5;
+  border-radius: 40px;
+  padding: 0.3rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  color: #0f5b73;
+  text-align: center;
+  width: 100%;
+}
+
+.snapshot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 1rem 0;
+  justify-content: center;
+}
+
+.metric-badge {
+  background: #eef3fc;
+  padding: 0.5rem 1.2rem;
+  border-radius: 60px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f4c6b;
+  border: 1px solid #bdd9e8;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0 0.5rem;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: 44px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+  background: #146b7e;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,70,90,0.2);
+}
+
+.btn-primary:hover {
+  background: #0d5568;
+  transform: scale(0.97);
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid #87bed3;
+  color: #146b7e;
+}
+
+.btn-outline:hover {
+  background: #eef5fc;
+}
+
+/* contributions */
+.contrib-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contrib-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f6fafd;
+  padding: 0.7rem 1rem;
+  border-radius: 20px;
+}
+
+.contrib-value {
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.positive { color: #d9534f; }
+.negative { color: #2c9b6e; }
+
+/* trend chart container */
+.chart-container {
+  background: #ffffffcc;
+  border-radius: 24px;
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+canvas {
+  max-height: 220px;
+  width: 100%;
+}
+
+.trend-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.stat-card {
+  background: linear-gradient(145deg, #eef5fc, #ffffff);
+  border-radius: 24px;
+  padding: 0.7rem;
+  text-align: center;
+  flex: 1;
+  font-weight: 600;
+}
+
+.ai-tip {
+  background: #e1f0f5;
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  font-weight: 500;
+  border-left: 5px solid #2c9baf;
+  margin: 1rem 0;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.action-chip {
+  background: #e7f0fa;
+  border-radius: 40px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid #c0dfed;
+}
+
+.action-chip:hover {
+  background: #d4e6f2;
+  transform: translateY(-2px);
+}
+
+.insight-item {
+  background: #fef7e0;
+  border-left: 6px solid #f4b942;
+  padding: 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 0.9rem;
+}
+
+.insight-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.apply-tip {
+  cursor: pointer;
+  color: #146b7e;
+  text-decoration: underline;
+}
+
+/* sliders */
+.sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.3rem;
+}
+
+.slider-group {
+  background: #f6fbfe;
+  padding: 0.8rem;
+  border-radius: 24px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0.6rem 0;
+  accent-color: #2c9baf;
+}
+
+.rec-text {
+  font-size: 0.7rem;
+  color: #3e7b96;
+}
+
+.inline-update-note {
+  font-size: 0.7rem;
+  background: #e3f0f5;
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  border-radius: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 750px) {
+  body { padding: 1.2rem; }
+  .card { padding: 1.2rem; }
+  .circular-gauge { width: 150px; height: 150px; }
+  .gauge-percent { font-size: 26px; }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NeuroWell — Burnout Risk Intelligence</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="dashboard">
+  <div class="header">
+    <h1>🧠 NeuroWell · Burnout Risk Intelligence</h1>
+    <div class="subhead">AI model predicts current risk using last 30 days of behavior. Slide controls → real‑time what‑if simulation.</div>
+  </div>
+
+  <div class="grid">
+    <!-- RISK CARD + DIGITAL METER (Circular Gauge) -->
+    <div class="card">
+      <div class="card-title">⚡ Live Risk Score · Digital Meter</div>
+      <div class="risk-meter">
+        <div class="risk-label">PREDICTED BURNOUT RISK</div>
+        
+        <!-- Digital Circular Meter -->
+        <div class="gauge-container">
+          <svg class="circular-gauge" viewBox="0 0 200 200">
+            <!-- Background circle -->
+            <circle class="gauge-bg" cx="100" cy="100" r="85" fill="none" stroke="#e0e8f0" stroke-width="14" stroke-linecap="round"/>
+            <!-- Progress circle (will be updated via JS) -->
+            <circle class="gauge-progress" cx="100" cy="100" r="85" fill="none" stroke="url(#gaugeGradient)" stroke-width="14" stroke-linecap="round" 
+                    stroke-dasharray="534.07" stroke-dashoffset="534.07" transform="rotate(-90 100 100)"/>
+            <!-- Gradient definition -->
+            <defs>
+              <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2c9baf"/>
+                <stop offset="50%" stop-color="#f4b942"/>
+                <stop offset="100%" stop-color="#d9534f"/>
+              </linearGradient>
+            </defs>
+            <!-- Center text -->
+            <text x="100" y="95" text-anchor="middle" class="gauge-percent" id="gaugePercentText">0%</text>
+            <text x="100" y="118" text-anchor="middle" class="gauge-label">RISK</text>
+          </svg>
+        </div>
+
+        <div class="confidence-badge" id="confidenceBadge">📊 Confidence: 87% · model certainty high</div>
+        <div class="snapshot-row" id="snapshotValues"></div>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="runSimulateBtn">⟳ Update Simulation</button>
+          <button class="btn btn-outline" id="downloadReportBtn">📎 Download Report</button>
+        </div>
+        <div class="inline-update-note" id="liveUpdateNote">✨ Sliders change risk & trends instantly</div>
+      </div>
+    </div>
+
+    <!-- Feature Contributions (Explainable AI) -->
+    <div class="card">
+      <div class="card-title">🔍 Explainable AI · factor shifts</div>
+      <div class="contrib-list" id="contribList"></div>
+    </div>
+
+    <!-- TREND GRAPH + 7-day insights -->
+    <div class="card">
+      <div class="card-title">📉 7‑Day Trend · Sleep vs Workload vs Stress</div>
+      <div class="chart-container">
+        <canvas id="trendChart" width="400" height="180" style="max-height: 190px;"></canvas>
+      </div>
+      <div class="trend-stats" id="trendStats"></div>
+      <div class="ai-tip" id="aiTipMessage">💡 AI Tip: balance sleep & movement for lower risk</div>
+      <div class="quick-actions" id="quickActions">
+        <div class="action-chip">🔕 Smart Notifications</div>
+        <div class="action-chip">🎯 Focus Mode</div>
+        <div class="action-chip">📬 Daily Summary</div>
+      </div>
+    </div>
+
+    <!-- Recent Insights + dynamic -->
+    <div class="card">
+      <div class="card-title">📌 Recent AI Insights</div>
+      <div id="recentInsightsContainer"></div>
+    </div>
+    
+    <!-- What-if Analysis (full width) -->
+     
+    <div class="card card-full">
+      <div class="card-title">🎛️ What-if Analysis — slide to explore</div>
+      <div class="sliders-grid">
+        <div class="slider-group">
+          <div class="slider-header"><span>😴 Sleep (hours)</span> <span id="sleepValLabel" class="value-highlight">6.5h</span></div>
+          <input type="range" id="sleepSlider" min="3" max="10" step="0.1" value="6.5">
+          <div class="rec-text">optimal 7-9h · less sleep ↑risk</div>
+        </div>
+        <div class="slider-group">
+          <div class="slider-header"><span>💼 Work / Study (hours)</span> <span id="workValLabel">10h</span></div>
+          <input type="range" id="workSlider" min="0" max="16" step="0.5" value="10">
+          <div class="rec-text">ideal &lt;8h · high workload spikes risk</div>
+        </div>
+        <div class="slider-group">
+          <div class="slider-header"><span>🏃 Physical Activity (min)</span> <span id="activityValLabel">35 min</span></div>
+          <input type="range" id="activitySlider" min="0" max="120" step="5" value="35">
+          <div class="rec-text">protective factor · 30+ min reduces risk</div>
+        </div>
+        <div class="slider-group">
+          <div class="slider-header"><span>📱 Screen Time (hours)</span> <span id="screenValLabel">7.2h</span></div>
+          <input type="range" id="screenSlider" min="1" max="14" step="0.2" value="7.2">
+          <div class="rec-text">long sessions → stress correlation +18%</div>
+        </div>
+        <div class="slider-group">
+          <div class="slider-header"><span>😵 Stress Level</span> <span id="stressValLabel">5</span></div>
+          <input type="range" id="stressSlider" min="0" max="10" step="1" value="5">
+          <div class="rec-text">higher stress increases burnout risk</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+        <button class="btn btn-outline" id="resetSlidersBtn">⟳ Reset to baseline</button>
+        <span class="inline-update-note">⚡ instant model update</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
